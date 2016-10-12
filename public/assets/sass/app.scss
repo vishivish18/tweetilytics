@@ -1,0 +1,71 @@
+/*Global Definitions*/
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif !important;
+    overflow-x: hidden;
+    background: #F2F6F9;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+h1 {
+    color: #000000;
+}
+
+p {
+    color: #000;
+}
+.bold {
+  font-weight: 700
+}
+.no-padding{
+  padding: 0 !important;
+}
+.top-buffer {
+    margin-top: 30px;
+}
+
+.navbar-default {
+    background-color: white !important;
+    border-color: #e4e4e4;
+}
+.card{
+  box-shadow: 2px 2px 2px 2px rgba(50, 50, 50, 0.1);
+  background:white;
+  padding:10px;
+}
+.stats{
+    padding: 10px;
+}
+.legend-wrapper{
+  display:inline-block;
+  padding:10px;
+}
+.legend-color-block{
+  height:20px;
+  width:20px;
+  display:inline-block
+}
+.legend-description-block{
+  padding-left:10px;
+}
+.stats{
+  font-size: 42px;
+  text-align: center;
+}
+.stats-header{
+  color:#b3b3b3;
+}
+.card-heading{
+  text-align: center;
+}
+.conclusion{
+  font-style: italic;
+}
+.conclusion-card{
+  margin-bottom: 30px;
+}
