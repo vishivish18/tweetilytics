@@ -8,8 +8,9 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({
     extended: true
 })); // support encoded bodies
-app.use('/', require('./app/controllers/static'))
 app.use('/crawl', require('./crawler'));
+app.use('/', require('./app/controllers/static'))
+
 
 var port = process.env.PORT || 1805
 var server = app.listen(port, function() {

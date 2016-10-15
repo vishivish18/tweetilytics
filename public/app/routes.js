@@ -17,16 +17,17 @@ angular.module('app')
                 }
             })
 
-        .state('app.home', {
-            url: 'home',
+        .state('app.crawler', {
+            url: 'crawler',
             views: {
                 'content@': {
-                    templateUrl: 'users/home.html',
-                    controller: 'homeCtrl'
+                    templateUrl: '/crawler.html',
+                    controller: 'crawlerCtrl'
                 }
             }
 
         });
+
         $locationProvider.html5Mode(true);
 
     });

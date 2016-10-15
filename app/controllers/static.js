@@ -6,9 +6,9 @@ var path = require('path');
 router.use(express.static(path.resolve('public/assets/')));
 router.use(express.static(path.resolve('public/dist/')));
 router.use(express.static(__dirname + '/../../public/app/views'));
-// router.get('*', function(req, res) {
-//     res.sendFile(path.resolve('public/index.html'));
-// });
+router.get('*', function(req, res) {
+    res.sendFile(path.resolve('public/index.html'));
+});
 
 
 module.exports = router;
