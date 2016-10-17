@@ -22,7 +22,7 @@ var T = new Twit({
 function crawlTweets(tweets, cb, res, since_id) {
     console.log("This is the since_id: " + since_id);
     console.log(counter++);
-    T.get('search/tweets', { q: '#testingCrawler', count: 100, max_id: since_id ? since_id : null }, function(err, data, response) {
+    T.get('search/tweets', { q: '#analytics', count: 100, max_id: since_id ? since_id : null }, function(err, data, response) {
         tweets = extend(tweets, data);
         cb(tweets, res, since_id);
     })
