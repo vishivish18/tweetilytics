@@ -66,8 +66,8 @@ router.get('/location_stats', function(req, res, next) {
     })
 })
 
-router.get('/search', function(req, res, next) {
-    var text = 'tweet';
+router.get('/search/:term', function(req, res, next) {
+    var text = req.params.term;
     Tweet.find({ $text: { $search: text } }, function(err, tweets) {
         if (err) {
             console.log(err);
