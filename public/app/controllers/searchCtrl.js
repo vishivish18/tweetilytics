@@ -16,12 +16,22 @@ angular.module('app')
 
 
         $scope.getData = function(val) {
+            $scope.loading = true;
             $http.get('api/tweets/search/' + val)
                 .then(function(res) {
                     console.log(res);
                     $scope.tweets = res.data;
+                    $scope.loading = false;
                 }, function(err) {
                     console.log(err);
                 })
         };
+    })
+    .filter('highlight', function($sce) {
+        return function(text, phrase) {
+            if (phrase) text = text.replace(new RegExp('(' + phrase + ')', 'gi'),
+                '<span class="highlighted">$1</span>')
+
+            return $sce.trustAsHtml(text)
+        }
     });
