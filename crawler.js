@@ -3,8 +3,11 @@ var router = express.Router();
 var config = require('./config');
 var Twit = require('twit');
 var extend = require('extend');
-var Tweet = require('./app/models/tweets')
+var Tweet = require('./app/models/tweets');
+var _ = require('underscore');
 fs = require('fs');
+var moment = require('moment');
+
 
 
 var counter = 0;
@@ -12,8 +15,8 @@ var T = new Twit({
     consumer_key: config.consumer_key,
     consumer_secret: config.consumer_secret,
     access_token: config.access_token,
-    access_token_secret: config.access_token_secret,
-    timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
+    access_token_secret: config.access_token_secret
+        // timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
 })
 
 function crawlTweets(tweets, cb, res, since_id) {
@@ -27,7 +30,7 @@ function crawlTweets(tweets, cb, res, since_id) {
 
 function crawlTweetsCallback(data, res, prev_lowest) {
 
-    if (data.search_metadata) {
+    if (!data.errors) {
         var tweets = data;
         var statuses = tweets.statuses;
         var since_id = tweets.search_metadata.since_id_str ? tweets.search_metadata.since_id_str : null;
@@ -38,7 +41,8 @@ function crawlTweetsCallback(data, res, prev_lowest) {
             var tweet = new Tweet({
                 id: status.id,
                 created_at: status.created_at,
-                text: status.text
+                text: status.text,
+                country: status.place ? status.place.country : 'N/A'
 
             })
             tweet.save(function(err, tweet) {
@@ -51,19 +55,28 @@ function crawlTweetsCallback(data, res, prev_lowest) {
 
             })
         })
-        console.log("Previous id "+ prev_lowest);
-        console.log("Lowest id "+ lowest_id);
+        console.log("Previous id " + prev_lowest);
+        console.log("Lowest id " + lowest_id);
         if (prev_lowest == lowest_id) {
             load_more = false;
+            console.log("previous id and lowest id are same now")
         } else {
             load_more = true;
         }
-
+        load_more = true
         console.log("Loading more is: " + load_more)
         load_more ? crawlTweets(tweets, crawlTweetsCallback, res, lowest_id) : res.json(tweets);
         //res.json(tweets);
     } else {
-        console.log(data);
+        console.log("There is timeout for RATE LIMTI" + data.errors[0].code);
+        console.log("I am Waiting");
+        // setInterval(function() { 
+        //     console.log("Tick");
+        // }, 30 * 1000);
+        setTimeout(function() {
+            console.log("I am done waiting, let's try again !")
+            crawlTweets(null, crawlTweetsCallback, res, prev_lowest)
+        }, (16 * 60) * 1000);
     }
 
 
@@ -73,15 +86,27 @@ function crawlTweetsCallback(data, res, prev_lowest) {
 
 
 router.get('/tweets', function(req, res) {
-    console.log("got the call")
-    var tweets = null;
-    crawlTweets(tweets, crawlTweetsCallback, res);
+    // console.log("got the call")
+    // var tweets = null;
+    // crawlTweets(tweets, crawlTweetsCallback, res);
     // Tweet.find(function(err, tweets) {
-    //     if (err) {
-    //         console.error(err)
-    //     }
-    //     res.json(tweets)
+
     // })
+    Tweet.find()
+        .limit(10)
+        .exec(function(err, tweets) {
+            if (err) {
+                console.error(err)
+            }
+            var tweets = _.filter(tweets, function(tweet) {
+                return tweet.country !== "N/A";
+            });
+            tweets.map(function(tweet) {
+                var date = new Date(tweet.created_at);
+                console.log(date.getDate());
+            })
+            res.json(tweets);
+        });
 })
 
 module.exports = router;

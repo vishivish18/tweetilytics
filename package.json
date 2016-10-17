@@ -17,8 +17,10 @@
     "gulp-nodemon": "^2.0.3",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
+    "moment": "^2.15.1",
     "mongoose": "^4.6.3",
-    "twit": "^2.2.5"
+    "twit": "^2.2.5",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "eslint": "^3.3.1",
