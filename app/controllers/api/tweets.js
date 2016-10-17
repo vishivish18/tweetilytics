@@ -22,36 +22,27 @@ router.get('/', function(req, res, next) {
         });
 })
 
-router.get('/stats', function(req, res, next) {
+router.get('/daily_stats', function(req, res, next) {
     var daily_stats = [];
-    var globalData;
     Tweet.distinct('created_at', function(err, distinct) {
-            // I get an object with all the distinct dates available
-            // like : [`Mon Oct 17 2016 00:00:00 GMT+0530 (IST)`,`SUN Oct 16 2016 00:00:00 GMT+0530 (IST)`]
-            // I can save the day and count as key value in daily_stats
-            // [`Mon Oct 17 2016 00:00:00 GMT+0530 (IST) : 10`,
-            //   `SUN Oct 16 2016 00:00:00 GMT+0530 (IST)`: 13 ]
             async.eachSeries(distinct, function(date, callback) {
                 Tweet.count({
                     created_at: date
                 }, function(err, count) {
-                    daily_stats[date] = count;
+                    var obj = {
+                        date: date,
+                        count: count
+                    }
+                    daily_stats.push(obj);
+
                     callback(err)
                 });
             }, function(err) {
                 if (err) throw err;
-                console.log(daily_stats);
-                globalData = daily_stats
-                res.json({ data: globalData })
+                res.json(daily_stats)
             });
         })
         // use $filter('date') on the friend end for week transition
 })
-
-
-
-
-
-
 
 module.exports = router
