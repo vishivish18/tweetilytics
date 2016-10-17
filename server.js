@@ -8,6 +8,8 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({
     extended: true
 })); // support encoded bodies
+app.use('/api/route', router);
+app.use('/api/tweets', require('./app/controllers/api/tweets'))
 app.use('/crawl', require('./crawler'));
 app.use('/', require('./app/controllers/static'))
 

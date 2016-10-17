@@ -4,7 +4,7 @@ var config = require('./config');
 var Twit = require('twit');
 var extend = require('extend');
 var Tweet = require('./app/models/tweets');
-var _ = require('underscore');
+
 fs = require('fs');
 var moment = require('moment');
 
@@ -22,7 +22,7 @@ var T = new Twit({
 function crawlTweets(tweets, cb, res, since_id) {
     console.log("This is the since_id: " + since_id);
     console.log(counter++);
-    T.get('search/tweets', { q: '#analytics', count: 100, max_id: since_id ? since_id : null }, function(err, data, response) {
+    T.get('search/tweets', { q: '#testingCrawler', count: 100, max_id: since_id ? since_id : null }, function(err, data, response) {
         tweets = extend(tweets, data);
         cb(tweets, res, since_id);
     })
@@ -38,9 +38,11 @@ function crawlTweetsCallback(data, res, prev_lowest) {
         var lowest_id = tweets.statuses[tweets.statuses.length - 1].id
         console.log(lowest_id);
         statuses.map(function(status) {
+            var d = new Date(status.created_at);
+            d.setHours(0, 0, 0, 0, 0);
             var tweet = new Tweet({
                 id: status.id,
-                created_at: status.created_at,
+                created_at: d,
                 text: status.text,
                 country: status.place ? status.place.country : 'N/A'
 
@@ -86,27 +88,10 @@ function crawlTweetsCallback(data, res, prev_lowest) {
 
 
 router.get('/tweets', function(req, res) {
-    // console.log("got the call")
-    // var tweets = null;
-    // crawlTweets(tweets, crawlTweetsCallback, res);
-    // Tweet.find(function(err, tweets) {
+    console.log("got the call")
+    var tweets = null;
+    crawlTweets(tweets, crawlTweetsCallback, res);
 
-    // })
-    Tweet.find()
-        .limit(10)
-        .exec(function(err, tweets) {
-            if (err) {
-                console.error(err)
-            }
-            var tweets = _.filter(tweets, function(tweet) {
-                return tweet.country !== "N/A";
-            });
-            tweets.map(function(tweet) {
-                var date = new Date(tweet.created_at);
-                console.log(date.getDate());
-            })
-            res.json(tweets);
-        });
 })
 
 module.exports = router;
