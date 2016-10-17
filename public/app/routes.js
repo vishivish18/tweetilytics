@@ -26,7 +26,17 @@ angular.module('app')
                 }
             }
 
-        });
+        })
+        .state('app.search', {
+            url: 'search',
+            views: {
+                'content@': {
+                    templateUrl: '/search.html',
+                    controller: 'searchCtrl'
+                }
+            }
+
+        })
 
         $locationProvider.html5Mode(true);
 

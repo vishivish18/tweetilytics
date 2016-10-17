@@ -42,7 +42,42 @@ router.get('/daily_stats', function(req, res, next) {
                 res.json(daily_stats)
             });
         })
-        // use $filter('date') on the friend end for week transition
+        // use $filter('date') on the font end for week transition
 })
+router.get('/location_stats', function(req, res, next) {
+    var location_stats = [];
+    Tweet.distinct('country', function(err, distinct) {
+        async.eachSeries(distinct, function(country, callback) {
+            Tweet.count({
+                country: country
+            }, function(err, count) {
+                var obj = {
+                    country: country,
+                    count: count
+                }
+                location_stats.push(obj);
+
+                callback(err)
+            });
+        }, function(err) {
+            if (err) throw err;
+            res.json(location_stats)
+        });
+    })
+})
+
+router.get('/search', function(req, res, next) {
+    var text = 'tweet';
+    Tweet.find({ $text: { $search: text } }, function(err, tweets) {
+        if (err) {
+            console.log(err);
+        }
+        res.json(tweets)
+    });
+
+})
+
+
+
 
 module.exports = router

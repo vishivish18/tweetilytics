@@ -1,15 +1,13 @@
 angular.module('app')
-    .controller('homeCtrl', function($scope, $http) {
+    .controller('searchCtrl', function($scope, $http) {
         $scope.setup = function() {
-            // use data mutator to act upon data
-            // $http.get('api/tweets/daily_stats')
-            $http.get('api/tweets/location_stats')
+            $http.get('api/tweets/search')
                 .then(function(res) {
                     console.log(res);
+                    $scope.tweets = res.data;
                 }, function(err) {
                     console.log(err);
                 })
-
         };
         $scope.setup();
     });

@@ -1,0 +1,24 @@
+<div class="container top-buffer main-wrapper">
+    <div class="row">
+        <div class="col-xs-12 top-buffer card">
+            <h3>Search Tweets</h3>
+            <h5>Get all tweets with keyword #analytics</h5>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Tweet Text</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="tweet in tweets">
+                    <td>{{tweet.text}}</td>
+                    <td>{{tweet.created_at}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

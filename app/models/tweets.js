@@ -16,5 +16,5 @@ var tweet = db.Schema({
         type: String
     }
 })
-
+tweet.index({ text: 'text' });
 module.exports = db.model('Tweet', tweet)
