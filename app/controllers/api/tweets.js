@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var Tweet = require('../../models/tweets');
 var _ = require('underscore');
+var async = require("async");
 
 
 router.get('/', function(req, res, next) {
@@ -23,57 +24,37 @@ router.get('/', function(req, res, next) {
 
 router.get('/stats', function(req, res, next) {
     var daily_stats = [];
+    Tweet.distinct('created_at', function(err, distinct) {
+        getCountQuery(distinct, callback)
+    })
 
-    function getDistinctQuery() {
-        var promise = Tweet.distinct('created_at');
-        return promise;
+    function callback(res) {
+        console.log(daily_stats)
     }
 
-    function getCountQuery(date) {
-        var promise = Tweet.count({ created_at: date }).exec();
-        return promise;
-    }
-
-    var promise = getDistinctQuery();
-    promise.then(function(test) {
-            test.forEach(function(date) {
-                var anotherPromise = getCountQuery(date);
-                anotherPromise.then(function(result) {
-                    daily_stats[date] = result;
-                    console.log(result);
-                })
+    function getCountQuery(distinct, callback) {
+        async.forEach(distinct, function(date, callback) {
+            console.log(date); // print the key
+            Tweet.count({
+                created_at: date
+            }, function(err, count) {
+                setCount(date, count);
             })
-        })
-    console.log(daily_stats);
-        // promise.exec(function(err, distinct) {
-        //     if (err)
-        //         return console.log(err);
-        //     console.log(distinct);
-        //     distinct.forEach(function(date) {
-        //         Tweet.count({
-        //             created_at: date
-        //         }, function(err, count) {
-        //             daily_stats[date] = count;
-        //             console.log(count);
+            callback(daily_stats); // tell async that the iterator has completed
 
-    //         })
-    //     });
+        }, function(err) {
+            console.log('iterating done');
+        });
+    }
 
-    // });
-    // Tweet.distinct('created_at', function(err, distinct, res) {
-    //     console.log(typeof(distinct));
-    //     var daily_stats = [];
-    //     distinct.map(function(date) {
-    //         console.log(date);
-    //         Tweet.count({
-    //             created_at: date
-    //         }, function(err, count) {
-    //             daily_stats[date] = count;
-    //             console.log(count);
+    function setCount(date, count) {
+        daily_stats[date] = count;
+    }
 
-    //         })
-    //     })
-    // })
+
+
+
+
 
     // use $filter('date') on the friend end for week transition
 })
