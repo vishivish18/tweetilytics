@@ -1,50 +1,50 @@
 {
-  "name": "tweetilytics",
-  "version": "0.0.1",
-  "description": "Crawling and getting information about #analytics",
-  "main": "app.js",
-  "engines": {
-    "node": "4.1.1"
-  },
-  "dependencies": {
-    "angular-ui-router": "~0.2.15",
-    "async": "^2.1.2",
-    "body-parser": "~1.13.2",
-    "express": "~4.13.1",
-    "extend": "^3.0.0",
-    "gulp": "^3.9.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-ng-annotate": "^1.1.0",
-    "gulp-nodemon": "^2.0.3",
-    "gulp-sourcemaps": "^1.5.2",
-    "gulp-uglify": "^1.2.0",
-    "moment": "^2.15.1",
-    "mongoose": "^4.6.3",
-    "node-promise": "^0.5.12",
-    "promise": "^7.1.1",
-    "twit": "^2.2.5",
-    "underscore": "^1.8.3"
-  },
-  "devDependencies": {
-    "eslint": "^3.3.1",
-    "gulp-sass": "^2.3.2"
-  },
-  "scripts": {
-    "start": "gulp dev"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/vishivish18/tweetilytics.git"
-  },
-  "keywords": [
-    "Mongo",
-    "Express",
-    "Angular",
-    "Node"
-  ],
-  "author": "vishalR",
-  "license": "BSD-2-Clause",
-  "bugs": {
-    "url": "https://github.com/vishivish18/tweetilytics/issues"
-  }
+    "name": "tweetilytics",
+    "version": "0.0.1",
+    "description": "Crawling and getting information about #analytics",
+    "main": "app.js",
+    "engines": {
+        "node": "4.1.1"
+    },
+    "dependencies": {
+        "angular-ui-router": "~0.2.15",
+        "async": "^2.1.2",
+        "body-parser": "~1.13.2",
+        "express": "~4.13.1",
+        "extend": "^3.0.0",
+        "gulp": "^3.9.0",
+        "gulp-concat": "^2.6.0",
+        "gulp-ng-annotate": "^1.1.0",
+        "gulp-nodemon": "^2.0.3",
+        "gulp-sourcemaps": "^1.5.2",
+        "gulp-uglify": "^1.2.0",
+        "moment": "^2.15.1",
+        "mongoose": "^4.6.3",
+        "node-promise": "^0.5.12",
+        "promise": "^7.1.1",
+        "twit": "^2.2.5",
+        "underscore": "^1.8.3"
+    },
+    "devDependencies": {
+        "eslint": "^3.3.1",
+        "gulp-sass": "^2.3.2"
+    },
+    "scripts": {
+        "start": "gulp dev"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/vishivish18/tweetilytics.git"
+    },
+    "keywords": [
+        "Mongo",
+        "Express",
+        "Angular",
+        "Node"
+    ],
+    "author": "vishalR",
+    "license": "BSD-2-Clause",
+    "bugs": {
+        "url": "https://github.com/vishivish18/tweetilytics/issues"
+    }
 }
