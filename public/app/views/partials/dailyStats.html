@@ -1,5 +1,17 @@
 <div class="col-xs-12 card top-buffer">
-    <h2 class="card-heading">Daily Stats</h2>
-    <canvas tc-chartjs-line chart-options="options" chart-data="data"></canvas>
+    <h2 class="card-heading">Frequency Stats</h2>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#daily">Daily Stats</a></li>
+        <li><a data-toggle="tab" href="#weekly">Weekly Stats</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="daily" class="tab-pane fade in active">
+            <loader ng-show="loading"></loader>
+            <canvas tc-chartjs-line chart-options="options" chart-data="data"></canvas>
+        </div>
+        <div id="weekly" class="tab-pane fade">
+            <h3>Menu 1</h3>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+    </div>
 </div>
-

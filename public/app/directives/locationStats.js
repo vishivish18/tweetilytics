@@ -5,7 +5,7 @@ angular.module('app')
             scope: {
                 stats: '=item',
             },
-            templateUrl: 'partials/locationStats.html'
-            //controller: 'locationStatsCtrl'
+            templateUrl: 'partials/locationStats.html',
+            controller: 'locationStatsCtrl'
         };
     });

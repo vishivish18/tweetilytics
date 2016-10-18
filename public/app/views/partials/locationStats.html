@@ -1,3 +1,5 @@
 <div class="col-xs-12 card top-buffer">
     <h2 class="card-heading">Location Stats</h2>
+    <loader ng-show="loading"></loader>
+    <canvas tc-chartjs-pie chart-options="locationOptions" chart-data="locationData"></canvas>
 </div>
