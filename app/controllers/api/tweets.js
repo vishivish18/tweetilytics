@@ -67,14 +67,36 @@ router.get('/location_stats', function(req, res, next) {
 })
 
 router.get('/search/:term', function(req, res, next) {
-    var text = req.params.term;
-    Tweet.find({ $text: { $search: text } }, function(err, tweets) {
-        if (err) {
-            console.log(err);
-        }
-        res.json(tweets)
-    });
 
+    console.log(req.headers.page)
+    var current_page = req.headers.page ? parseInt(req.headers.page) : 1;
+    var total = 69000;
+    var per_page = 10;
+    var last_page = total / per_page;
+
+    var skip = (current_page - 1) * per_page;
+    console.log(typeof(current_page));
+    var metadata = {
+        current_page: current_page,
+        total: total,
+        last_page: last_page,
+        per_page: per_page
+    }
+
+    var text = req.params.term;
+    Tweet.find({ $text: { $search: text } })
+        .limit(per_page)
+        .skip(skip)
+        .exec(function(err, tweets) {
+            if (err) {
+                console.log(err);
+            }
+            var obj = {
+                metadata: metadata,
+                tweets: tweets
+            }
+            res.send(obj);
+        });
 })
 
 

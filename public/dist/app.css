@@ -63,3 +63,9 @@ p {
 
 .conclusion-card {
   margin-bottom: 30px; }
+
+tr:nth-child(even) .tweet-text {
+  font-size: 22px;
+  line-height: 32px;
+  font-weight: 300;
+  letter-spacing: .01em; }
