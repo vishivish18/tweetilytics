@@ -41,7 +41,7 @@ angular.module('app')
             angular.forEach(data, function(value, key) {
                 var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16)
                     var obj = {
-                        value: value.count,
+                        value: value.percentage,
                         color: randomColor,
                         highlight: randomColor,
                         label: value.country

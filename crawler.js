@@ -20,7 +20,6 @@ var T = new Twit({
 })
 
 function crawlTweets(tweets, cb, res, since_id) {
-    console.log("This is the since_id: " + since_id);
     console.log(counter++);
     T.get('search/tweets', { q: '#analytics', count: 100, max_id: since_id ? since_id : null }, function(err, data, response) {
         tweets = extend(tweets, data);
@@ -36,8 +35,8 @@ function crawlTweetsCallback(data, res, prev_lowest) {
         var since_id = tweets.search_metadata.since_id_str ? tweets.search_metadata.since_id_str : null;
         var max_id = tweets.search_metadata.max_id_str ? tweets.search_metadata.max_id_str : null;
         var lowest_id = tweets.statuses[tweets.statuses.length - 1].id
-        console.log(lowest_id);
         statuses.map(function(status) {
+            console.log(status.created_at);
             var d = new Date(status.created_at);
             d.setHours(0, 0, 0, 0, 0);
             var tweet = new Tweet({
@@ -57,11 +56,9 @@ function crawlTweetsCallback(data, res, prev_lowest) {
 
             })
         })
-        console.log("Previous id " + prev_lowest);
-        console.log("Lowest id " + lowest_id);
+       
         if (prev_lowest == lowest_id) {
             load_more = false;
-            console.log("previous id and lowest id are same now")
         } else {
             load_more = true;
         }

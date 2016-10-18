@@ -18,16 +18,20 @@ angular.module('app')
         $scope.getData = function(val) {
             $scope.loading = true;
             $scope.term = val;
+
             $http.get('api/tweets/search/' + val, {
                     headers: {
                         page: 1
                     }
                 })
                 .then(function(res) {
-                    console.log(res);
-                    console.log(typeof(res.data.metadata.current_page))
+                    var time = res.config.responseTimestamp - res.config.requestTimestamp;
                     $scope.tweets = res.data.tweets;
+                    res.data.tweets.map(function(value) {
+                        console.log(moment(value.created_at).format("D MMM, dddd"));
+                    })
                     $scope.metadata = res.data.metadata;
+                    $scope.metadata.time_taken = (time / 1000) + ' seconds.';
                     $scope.page = res.data.metadata.current_page;
                     $scope.loading = false;
                 }, function(err) {
@@ -64,8 +68,10 @@ angular.module('app')
                 })
                 .then(function(res) {
                     console.log(res);
+                    var time = res.config.responseTimestamp - res.config.requestTimestamp;
                     $scope.tweets = res.data.tweets;
                     $scope.metadata = res.data.metadata;
+                    $scope.metadata.time_taken = (time / 1000) + ' seconds.';
                     $scope.page = res.data.metadata.current_page;
                     $scope.loading = false;
                 }, function(err) {
@@ -82,8 +88,10 @@ angular.module('app')
                 })
                 .then(function(res) {
                     console.log(res);
+                    var time = res.config.responseTimestamp - res.config.requestTimestamp;
                     $scope.tweets = res.data.tweets;
                     $scope.metadata = res.data.metadata;
+                    $scope.metadata.time_taken = (time / 1000) + ' seconds.';
                     $scope.page = res.data.metadata.current_page;
                     $scope.loading = false;
                 }, function(err) {

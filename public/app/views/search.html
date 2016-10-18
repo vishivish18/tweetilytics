@@ -30,9 +30,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="tweet in tweets | filter:searchText">
-                    <td class="tweet-text" ng-bind-html="tweet.text | highlight:searchText"></td>
-                    <td>{{tweet.created_at}}</td>
+                <tr ng-repeat="tweet in tweets">
+                    <!-- <td class="tweet-text" ng-bind-html="tweet.text | highlight:searchText"></td> -->
+                    <td class="tweet-text">{{tweet.text}}</td>
+                    <td>{{tweet.created_at | date}}</td>
                 </tr>
             </tbody>
         </table>

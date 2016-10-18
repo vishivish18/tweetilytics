@@ -70,7 +70,7 @@ router.get('/search/:term', function(req, res, next) {
 
     console.log(req.headers.page)
     var current_page = req.headers.page ? parseInt(req.headers.page) : 1;
-    var total = 69000;
+    var total = 69000; // TODO : aysnc $text find() and count query
     var per_page = 10;
     var last_page = total / per_page;
 
