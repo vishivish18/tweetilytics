@@ -54,6 +54,43 @@ angular.module('app')
                 })
         }
 
+        $scope.loadNext = function() {
+            console.log("loading next");
+            $scope.loading = true;
+            $http.get('api/tweets/search/' + $scope.term, {
+                    headers: {
+                        page: $scope.page + 1
+                    }
+                })
+                .then(function(res) {
+                    console.log(res);
+                    $scope.tweets = res.data.tweets;
+                    $scope.metadata = res.data.metadata;
+                    $scope.page = res.data.metadata.current_page;
+                    $scope.loading = false;
+                }, function(err) {
+                    console.log(err);
+                })
+        }
+        $scope.loadPrevious = function() {
+            console.log("loading previous");
+            $scope.loading = true;
+            $http.get('api/tweets/search/' + $scope.term, {
+                    headers: {
+                        page: $scope.page - 1
+                    }
+                })
+                .then(function(res) {
+                    console.log(res);
+                    $scope.tweets = res.data.tweets;
+                    $scope.metadata = res.data.metadata;
+                    $scope.page = res.data.metadata.current_page;
+                    $scope.loading = false;
+                }, function(err) {
+                    console.log(err);
+                })
+        }
+
     })
     .filter('highlight', function($sce) {
         return function(text, phrase) {

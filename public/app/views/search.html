@@ -36,6 +36,12 @@
                 </tr>
             </tbody>
         </table>
-        <button ng-click="loadMore()" class="btn btn-primary btn-block">Load More</button>
+        <nav aria-label="...">
+            <ul class="pager">
+                <li ng-show="metadata.current_page != 1" class="previous"><a ng-click="loadPrevious()" href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                <li class="next"><a ng-click="loadNext()" href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+        </nav>
+        <!-- <button ng-click="loadMore()" class="btn btn-primary btn-block">Load More</button> -->
     </div>
 </div>
