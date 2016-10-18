@@ -11,6 +11,7 @@ var moment = require('moment');
 
 
 var counter = 0;
+var is_crawler_running = false;
 var T = new Twit({
     consumer_key: config.consumer_key,
     consumer_secret: config.consumer_secret,
@@ -20,6 +21,7 @@ var T = new Twit({
 })
 
 function crawlTweets(tweets, cb, res, since_id) {
+    is_crawler_running = true;
     console.log(counter++);
     T.get('search/tweets', { q: '#analytics', count: 100, max_id: since_id ? since_id : null }, function(err, data, response) {
         tweets = extend(tweets, data);
@@ -49,6 +51,7 @@ function crawlTweetsCallback(data, res, prev_lowest) {
             tweet.save(function(err, tweet) {
                 if (err) {
                     //console.log(err)
+                    //is_crawler_running = false;
 
                 }
                 //console.log("successfull")
@@ -56,7 +59,7 @@ function crawlTweetsCallback(data, res, prev_lowest) {
 
             })
         })
-       
+
         if (prev_lowest == lowest_id) {
             load_more = false;
         } else {
@@ -85,6 +88,9 @@ function crawlTweetsCallback(data, res, prev_lowest) {
 
 
 router.get('/tweets', function(req, res) {
+    if (is_crawler_running) {
+        res.json('running')
+    }
     console.log("got the call")
     var tweets = null;
     crawlTweets(tweets, crawlTweetsCallback, res);

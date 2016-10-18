@@ -1,7 +1,20 @@
 <div class="container top-buffer main-wrapper">
     <div class="row">
         <div class="col-xs-12 top-buffer card">
-            <h3>Crawler</h3>               
-        </div>       
+            <h3>Crawler</h3>
+            <div class="row" ng-if="running">
+                <div align="center">
+                    <marquee behavior="alternate">
+                        <img height="100" width="100" src="http://bestfreeclipart.tk/clipart/resource/2016/02/16/hairy-blue-bug-clip-art-hairy-blue-bug-image.png">
+                    </marquee>
+                    <marquee behavior="alternate" direction="right">
+                        <img height="100" width="100" src="http://downloadicons.net/sites/default/files/twitter-bird-icon-47084.png">
+                    </marquee>
+                    <img height="100" src="/images/loader.gif">
+                    <h5>Crawling tweets....</h5>
+                    <small>Sit back and relax</small>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
