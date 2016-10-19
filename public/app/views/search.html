@@ -18,8 +18,14 @@
                 </div>
             </div>
         </form>
-        <paginator item="metadata"></paginator>
+        <paginator ng-show="metadata" item="metadata"></paginator>
     </div>
+    <nav ng-show="tweets" aria-label="...">
+        <ul class="pager">
+            <li ng-show="metadata.current_page != 1" class="previous"><a ng-click="loadPrevious()" href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
+            <li ng-hide="metadata.current_page == metadata.last_page" class="next"><a ng-click="loadNext()" href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+    </nav>
     <div class="row card top-buffer">
         <loader ng-show="loading"></loader>
         <table class="table table-striped table-bordered table-hover">
@@ -37,10 +43,10 @@
                 </tr>
             </tbody>
         </table>
-        <nav aria-label="...">
+        <nav ng-show="tweets" aria-label="...">
             <ul class="pager">
                 <li ng-show="metadata.current_page != 1" class="previous"><a ng-click="loadPrevious()" href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
-                <li class="next"><a ng-click="loadNext()" href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+                <li ng-hide="metadata.current_page == metadata.last_page" class="next"><a ng-click="loadNext()" href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
             </ul>
         </nav>
         <!-- <button ng-click="loadMore()" class="btn btn-primary btn-block">Load More</button> -->

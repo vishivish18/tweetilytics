@@ -68,36 +68,50 @@ router.get('/location_stats', function(req, res, next) {
 })
 
 router.get('/search/:term', function(req, res, next) {
+    async.waterfall([
+        function(callback) {
+            Tweet.count(function(err, count) {
+                if (err) {
+                    return callback(err);
+                }
+                console.log(count)
+                callback(null, count);
+            });
 
-    console.log(req.headers.page)
-    var current_page = req.headers.page ? parseInt(req.headers.page) : 1;
-    var total = 69000; // TODO : aysnc $text find() and count query
-    var per_page = 10;
-    var last_page = total / per_page;
+        },
+        function(count, callback) {
+            console.log(count)
+            console.log(req.headers.page)
+            var current_page = req.headers.page ? parseInt(req.headers.page) : 1;
+            var total = count; // TODO : aysnc $text find() and count query
+            var per_page = 20;
+            var last_page = Math.floor(total / per_page);
 
-    var skip = (current_page - 1) * per_page;
-    console.log(typeof(current_page));
-    var metadata = {
-        current_page: current_page,
-        total: total,
-        last_page: last_page,
-        per_page: per_page
-    }
-
-    var text = req.params.term;
-    Tweet.find({ $text: { $search: text } })
-        .limit(per_page)
-        .skip(skip)
-        .exec(function(err, tweets) {
-            if (err) {
-                console.log(err);
+            var skip = (current_page - 1) * per_page;
+            console.log(typeof(current_page));
+            var metadata = {
+                current_page: current_page,
+                total: total,
+                last_page: last_page,
+                per_page: per_page
             }
-            var obj = {
-                metadata: metadata,
-                tweets: tweets
-            }
-            res.send(obj);
-        });
+
+            var text = req.params.term;
+            Tweet.find({ $text: { $search: text } })
+                .limit(per_page)
+                .skip(skip)
+                .exec(function(err, tweets) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    var obj = {
+                        metadata: metadata,
+                        tweets: tweets
+                    }
+                    res.send(obj);
+                });
+        }
+    ]);
 })
 
 
