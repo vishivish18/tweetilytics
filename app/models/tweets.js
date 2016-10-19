@@ -6,7 +6,7 @@ var tweet = db.Schema({
         unique: true
     },
     created_at: {
-        type: Date
+        type: String
 
     },
     text: {
