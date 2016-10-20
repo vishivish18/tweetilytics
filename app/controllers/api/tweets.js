@@ -26,6 +26,12 @@ router.get('/frequency_stats', function(req, res, next) {
     var daily_stats = [];
 
     Tweet.distinct('created_at', function(err, distinct) {
+            console.log(distinct)
+            distinct.sort(function(a, b) {
+
+                return new Date(b) - new Date(a);
+            });
+            console.log(distinct)
             async.eachSeries(distinct, function(date, callback) {
                 Tweet.count({
                     created_at: date
